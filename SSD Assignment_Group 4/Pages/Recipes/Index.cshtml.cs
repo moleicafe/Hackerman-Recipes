@@ -26,23 +26,38 @@ namespace SSD_Assignment_Group_4.Pages.Recipes
         public SelectList Cuisine { get; set; }
         [BindProperty(SupportsGet = true)]
         public string RecipeCuisine { get; set; }
+        //public async Task OnGetAsync()
+        //{
+        //    var recipes = from r in _context.Recipe
+        //                 select r;
+        //    if (!string.IsNullOrEmpty(SearchString))
+        //    {
+        //        recipes = recipes.Where(s => s.Title.Contains(SearchString));
+        //    }
+
+        //    Recipe = await recipes.ToListAsync();
+        //}
         public async Task OnGetAsync()
         {
-            IQueryable<string> genreQuery = from m in _context.Recipe
+            // Use LINQ to get list of genres.
+            IQueryable<string> cuisineQuery = from m in _context.Recipe
                                             orderby m.Cuisine
                                             select m.Cuisine;
+
             var recipes = from m in _context.Recipe
                          select m;
+
             if (!string.IsNullOrEmpty(SearchString))
             {
                 recipes = recipes.Where(s => s.Title.Contains(SearchString));
             }
+
             if (!string.IsNullOrEmpty(RecipeCuisine))
             {
                 recipes = recipes.Where(x => x.Cuisine == RecipeCuisine);
             }
-            Cuisine = new SelectList(await genreQuery.Distinct().ToListAsync());
-            Recipe = await _context.Recipe.ToListAsync();
+            Cuisine = new SelectList(await cuisineQuery.Distinct().ToListAsync());
+            Recipe = await recipes.ToListAsync();
         }
     }
 }
