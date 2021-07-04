@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SSD_Assignment_Group_4.Data;
 using SSD_Assignment_Group_4.Models;
@@ -20,9 +21,27 @@ namespace SSD_Assignment_Group_4.Pages.Recipes
         }
 
         public IList<Recipe> Recipe { get;set; }
-
+        [BindProperty(SupportsGet = true)]
+        public string SearchString { get; set; }
+        public SelectList Cuisine { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public string RecipeCuisine { get; set; }
         public async Task OnGetAsync()
         {
+            IQueryable<string> genreQuery = from m in _context.Recipe
+                                            orderby m.Cuisine
+                                            select m.Cuisine;
+            var recipes = from m in _context.Recipe
+                         select m;
+            if (!string.IsNullOrEmpty(SearchString))
+            {
+                recipes = recipes.Where(s => s.Title.Contains(SearchString));
+            }
+            if (!string.IsNullOrEmpty(RecipeCuisine))
+            {
+                recipes = recipes.Where(x => x.Cuisine == RecipeCuisine);
+            }
+            Cuisine = new SelectList(await genreQuery.Distinct().ToListAsync());
             Recipe = await _context.Recipe.ToListAsync();
         }
     }
