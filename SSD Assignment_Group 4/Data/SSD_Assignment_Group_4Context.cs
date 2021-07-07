@@ -16,10 +16,14 @@ namespace SSD_Assignment_Group_4.Data
         {
         }
 
+        public DbSet<SSD_Assignment_Group_4.Models.Recipe> Recipe { get; set; }
+        public DbSet<SSD_Assignment_Group_4.Models.RecipeUser> RecipeUsers { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.Entity<Recipe>().ToTable("Recipe");
+            builder.Entity<RecipeUser>().ToTable("AspNetUsers");
             base.OnModelCreating(builder);
         }
-        public DbSet<SSD_Assignment_Group_4.Models.Recipe> Recipe { get; set; }
+
     }
 }
