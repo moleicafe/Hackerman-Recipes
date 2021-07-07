@@ -35,7 +35,7 @@ namespace SSD_Assignment_Group_4.Pages.Recipes
             {
                 return Page();
             }
-
+            Recipe.ReleaseDate = DateTime.Today;
             _context.Recipe.Add(Recipe);
             await _context.SaveChangesAsync();
 
