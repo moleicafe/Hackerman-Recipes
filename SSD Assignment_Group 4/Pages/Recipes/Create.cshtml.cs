@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using SSD_Assignment_Group_4.Data;
 using SSD_Assignment_Group_4.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+
 
 
 namespace SSD_Assignment_Group_4.Pages.Recipes
@@ -16,9 +18,11 @@ namespace SSD_Assignment_Group_4.Pages.Recipes
     public class CreateModel : PageModel
     {
         private readonly SSD_Assignment_Group_4.Data.SSD_Assignment_Group_4Context _context;
+        private readonly UserManager<RecipeUser> _userManager;
 
-        public CreateModel(SSD_Assignment_Group_4.Data.SSD_Assignment_Group_4Context context)
+        public CreateModel(SSD_Assignment_Group_4.Data.SSD_Assignment_Group_4Context context, UserManager<RecipeUser> userManager)
         {
+            _userManager = userManager;
             _context = context;
         }
 
@@ -38,7 +42,9 @@ namespace SSD_Assignment_Group_4.Pages.Recipes
             {
                 return Page();
             }
-            Recipe.ReleaseDate = DateTime.Today;
+            RecipeUser applicationUser = await _userManager.GetUserAsync(User);
+            Recipe.Author = applicationUser?.UserName;
+            Recipe.ReleaseDate = DateTime.Now.ToString("M/d/yyyy");
             _context.Recipe.Add(Recipe);
             await _context.SaveChangesAsync();
 

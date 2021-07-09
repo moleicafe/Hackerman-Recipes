@@ -21,7 +21,7 @@
     </p>
 </form>
 
-<table class="table">
+<<table class="table">
     <thead>
         <tr>
             <th>
@@ -46,32 +46,33 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Recipe) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Author)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Cuisine)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Ingredients)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ReleaseDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Rating)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.Recipe)
+        {
+            <tr>
+                <td>
+                    @Microsoft.Security.Application.Sanitizer.GetSafeHtmlFragment(item.Title)
+                </td>
+                <td>
+                    @item.Author
+                </td>
+                <td>
+                    @Microsoft.Security.Application.Sanitizer.GetSafeHtmlFragment(item.Cuisine)
+                </td>
+                <td>
+                    @Microsoft.Security.Application.Sanitizer.GetSafeHtmlFragment(item.Ingredients)
+                </td>
+                <td>
+                    @item.ReleaseDate
+                </td>
+                <td>
+                    @item.Rating
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

@@ -11,17 +11,12 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form method="post">
+        <form method="post" asp-antiforgery="false">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Recipe.Title" class="control-label"></label>
                 <input asp-for="Recipe.Title" class="form-control" />
                 <span asp-validation-for="Recipe.Title" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Recipe.Author" class="control-label"></label>
-                <input asp-for="Recipe.Author" class="form-control" />
-                <span asp-validation-for="Recipe.Author" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Recipe.Cuisine" class="control-label"></label>
@@ -32,11 +27,6 @@
                 <label asp-for="Recipe.Ingredients" class="control-label"></label>
                 <input asp-for="Recipe.Ingredients" class="form-control" />
                 <span asp-validation-for="Recipe.Ingredients" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Recipe.Rating" class="control-label"></label>
-                <input asp-for="Recipe.Rating" class="form-control" />
-                <span asp-validation-for="Recipe.Rating" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

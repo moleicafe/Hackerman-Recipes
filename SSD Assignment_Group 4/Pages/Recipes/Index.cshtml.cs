@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using SSD_Assignment_Group_4.Data;
 using SSD_Assignment_Group_4.Models;
 using Microsoft.AspNetCore.Authorization;
+using System.ComponentModel.DataAnnotations;
 
 
 namespace SSD_Assignment_Group_4.Pages.Recipes
@@ -25,6 +26,7 @@ namespace SSD_Assignment_Group_4.Pages.Recipes
 
         public IList<Recipe> Recipe { get;set; }
         [BindProperty(SupportsGet = true)]
+        [RegularExpression("^[a-zA-Z0-9]*$", ErrorMessage = "Please only enter alphanumeric characters.")]
         public string SearchString { get; set; }
         public SelectList Cuisine { get; set; }
         [BindProperty(SupportsGet = true)]

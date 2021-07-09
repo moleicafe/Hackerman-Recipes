@@ -28,7 +28,7 @@ namespace SSD_Assignment_Group_4.Models
                         Author = "Molei",
                         Cuisine = "American",
                         Ingredients = "Butter, Sugar, Eggs, Vanilla Extract, Cocoa Powder, All-purpose flour, Salt, Baking powder",
-                        ReleaseDate = DateTime.Parse("2021-7-4"),
+                        ReleaseDate = "7/4/2021",
                         Rating = 5
                     },
 
@@ -38,7 +38,7 @@ namespace SSD_Assignment_Group_4.Models
                         Author = "Molei",
                         Cuisine = "Italian",
                         Ingredients = "Macaroni, Butter, Flour, Milk, Cheddar cheese, Swiss cheese, Bread crumbs",
-                        ReleaseDate = DateTime.Parse("2021-7-4"),
+                        ReleaseDate = "7/4/2021",
                         Rating = 5
                     },
 
@@ -48,7 +48,7 @@ namespace SSD_Assignment_Group_4.Models
                         Author = "Molei",
                         Cuisine = "American",
                         Ingredients = "Mushrooms, Butter, Green onions, Garlic, Thyme, Flour, Vegetable broth, Light cream, Salt, Pepper, Chives",
-                        ReleaseDate = DateTime.Parse("2021-7-4"),
+                        ReleaseDate = "7/4/2021",
                         Rating = 5
                     }
                 );
