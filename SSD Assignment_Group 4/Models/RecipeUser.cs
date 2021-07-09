@@ -12,7 +12,6 @@ namespace SSD_Assignment_Group_4.Models
     {
         [Display(Name = "Name")]
         [RegularExpression(@"^[A-Z]+[a-zA-Z\s]*$")]
-        [Required]
         [StringLength(30)]
         public string Name { get; set; }
         [Display(Name = "Birth Date")]
