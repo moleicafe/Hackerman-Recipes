@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using SSD_Assignment_Group_4.Data;
 using System;
 using System.Linq;
+using Microsoft.AspNetCore.Identity;
 
 namespace SSD_Assignment_Group_4.Models
 {
@@ -52,6 +53,73 @@ namespace SSD_Assignment_Group_4.Models
                     }
                 );
                 context.SaveChanges();
+            }
+        }
+
+        public static void SeedUsers_Roles(UserManager<RecipeUser> _userManager,RoleManager<ApplicationRole> _roleManager)
+        {
+            SeedRoles(_roleManager);
+            SeedUsers(_userManager);
+        }
+
+        public static void SeedUsers(UserManager<RecipeUser> _userManager)
+        {
+            if (_userManager.FindByNameAsync("user1").Result == null)
+            {
+                RecipeUser user = new RecipeUser();
+                user.UserName = "user1";
+                user.Email = "user1@gmail.com";
+                user.Name = "Nancy Davolio";
+                user.BirthDate = new DateTime(1960, 2, 7);
+
+                IdentityResult result = _userManager.CreateAsync
+                (user, "Password123").Result;
+
+                if (result.Succeeded)
+                {
+                    _userManager.AddToRoleAsync(user,
+                                        "Users").Wait();
+                }
+            }
+
+
+            if (_userManager.FindByNameAsync("admin1").Result == null)
+            {
+                RecipeUser user = new RecipeUser();
+                user.UserName = "admin1";
+                user.Email = "admin1@gmail.com";
+                user.Name = "Mark Smith";
+                user.BirthDate = new DateTime(1965, 12, 6);
+
+                IdentityResult result = _userManager.CreateAsync
+                (user, "P@ssword123").Result;
+
+                if (result.Succeeded)
+                {
+                    _userManager.AddToRoleAsync(user, "Admin").Wait();
+                }
+            }
+        }
+
+        public static void SeedRoles(RoleManager<ApplicationRole> _roleManager)
+        {
+            if (!_roleManager.RoleExistsAsync("Users").Result)
+            {
+                ApplicationRole role = new ApplicationRole();
+                role.Name = "Users";
+                role.Description = "Perform normal operations.";
+                IdentityResult roleResult = _roleManager.
+                CreateAsync(role).Result;
+            }
+
+
+            if (!_roleManager.RoleExistsAsync("Admin").Result)
+            {
+                ApplicationRole role = new ApplicationRole();
+                role.Name = "Admin";
+                role.Description = "Perform all the operations.";
+                IdentityResult roleResult = _roleManager.
+                CreateAsync(role).Result;
             }
         }
     }

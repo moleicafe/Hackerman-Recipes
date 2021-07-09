@@ -24,13 +24,16 @@ namespace SSD_Assignment_Group_4.Areas.Identity.Pages.Account
         private readonly UserManager<RecipeUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly RoleManager<ApplicationRole> _roleManager;
 
         public RegisterModel(
+            RoleManager<ApplicationRole> roleManager,
             UserManager<RecipeUser> userManager,
             SignInManager<RecipeUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender)
         {
+            _roleManager = roleManager;
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
@@ -82,10 +85,12 @@ namespace SSD_Assignment_Group_4.Areas.Identity.Pages.Account
             {
                 var user = new RecipeUser { UserName = Input.Username, Email = Input.Email };
                 var result = await _userManager.CreateAsync(user, Input.Password);
+
+
                 if (result.Succeeded)
                 {
+                    _userManager.AddToRoleAsync(user, "Users").Wait();
                     _logger.LogInformation("User created a new account with password.");
-
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                     var callbackUrl = Url.Page(

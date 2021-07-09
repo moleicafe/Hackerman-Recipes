@@ -67,7 +67,9 @@ namespace SSD_Assignment_Group_4
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, 
+            UserManager<RecipeUser> _userManager,
+            RoleManager<ApplicationRole> _roleManager)
         {
             if (env.IsDevelopment())
             {
@@ -84,6 +86,8 @@ namespace SSD_Assignment_Group_4
             app.UseStaticFiles();
 
             app.UseAuthentication();
+
+            SeedData.SeedUsers_Roles(_userManager, _roleManager);
 
             app.UseRouting();
 
