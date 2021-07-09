@@ -26,18 +26,18 @@ namespace SSD_Assignment_Group_4.Models
                 context.Recipe.AddRange(
                     new Recipe
                     {
-                        ID=1,
-                        Title= "Best Brownies",
-                        Author="Molei",
+                        ID = 1,
+                        Title = "Best Brownies",
+                        Author = "Molei",
                         Cuisine = "American",
-                        Ingredients= "Butter, Sugar, Eggs, Vanilla Extract, Cocoa Powder, All-purpose flour, Salt, Baking powder",
-                        ReleaseDate= DateTime.Parse("2021-7-4"),
-                        Rating= 5
+                        Ingredients = "Butter, Sugar, Eggs, Vanilla Extract, Cocoa Powder, All-purpose flour, Salt, Baking powder",
+                        ReleaseDate = DateTime.Parse("2021-7-4"),
+                        Rating = 5
                     },
 
                     new Recipe
                     {
-                        ID=2,
+                        ID = 2,
                         Title = "Classic Mac and Cheese",
                         Author = "Molei",
                         Cuisine = "Italian",
@@ -48,7 +48,7 @@ namespace SSD_Assignment_Group_4.Models
 
                     new Recipe
                     {
-                        ID=3,
+                        ID = 3,
                         Title = "Cream of Mushroom Soup",
                         Author = "Molei",
                         Cuisine = "American",
@@ -60,11 +60,12 @@ namespace SSD_Assignment_Group_4.Models
                 context.RecipeUser.AddRange(
                     new RecipeUser
                     {
-                        UserName="admin1",
-                        Email="admin1@gmail.com",
-                        
-                    })
+                        UserName = "admin1",
+                        Email = "admin1@gmail.com",
+
+                    });
                 context.SaveChanges();
             }
+        }
     }
 }

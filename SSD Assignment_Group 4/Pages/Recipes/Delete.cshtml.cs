@@ -11,7 +11,8 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace SSD_Assignment_Group_4.Pages.Recipes
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
+
     public class DeleteModel : PageModel
     {
         private readonly SSD_Assignment_Group_4.Data.SSD_Assignment_Group_4Context _context;

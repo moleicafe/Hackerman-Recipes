@@ -33,7 +33,7 @@ namespace SSD_Assignment_Group_4
             services.AddDbContext<SSD_Assignment_Group_4Context>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("SSD_Assignment_Group_4Context")));
 
-            services.AddIdentity<RecipeUser, Microsoft.AspNetCore.Identity.IdentityRole>()
+            services.AddIdentity<RecipeUser, ApplicationRole>()
             .AddDefaultUI()
             .AddEntityFrameworkStores<SSD_Assignment_Group_4Context>()
              .AddDefaultTokenProviders();
