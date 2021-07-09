@@ -34,9 +34,9 @@ namespace SSD_Assignment_Group_4
                     options.UseSqlServer(Configuration.GetConnectionString("SSD_Assignment_Group_4Context")));
 
             services.AddIdentity<RecipeUser, ApplicationRole>()
-            .AddDefaultUI()
-            .AddEntityFrameworkStores<SSD_Assignment_Group_4Context>()
-             .AddDefaultTokenProviders();
+                .AddDefaultUI()
+                .AddEntityFrameworkStores<SSD_Assignment_Group_4Context>()
+                .AddDefaultTokenProviders();
 
             services.AddMvc()
             .AddRazorPagesOptions(options =>

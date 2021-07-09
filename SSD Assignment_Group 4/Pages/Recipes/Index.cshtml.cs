@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace SSD_Assignment_Group_4.Pages.Recipes
 {
-    [Authorize(Roles = "Admin, Users")]
+    //[Authorize(Roles = "Admin, Users")]
     public class IndexModel : PageModel
     {
         private readonly SSD_Assignment_Group_4.Data.SSD_Assignment_Group_4Context _context;

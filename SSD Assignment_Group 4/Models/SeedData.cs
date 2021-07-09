@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using SSD_Assignment_Group_4.Data;
-using SSD_Assignment_Group_4.Models;
-using SSD_Assignment_Group_4.Migrations;
+using System;
+using System.Linq;
+
 namespace SSD_Assignment_Group_4.Models
 {
     public static class SeedData
@@ -17,7 +14,7 @@ namespace SSD_Assignment_Group_4.Models
                 serviceProvider.GetRequiredService<
                     DbContextOptions<SSD_Assignment_Group_4Context>>()))
             {
-                // Look for any Recipes.
+                // Look for any recipes.
                 if (context.Recipe.Any())
                 {
                     return;   // DB has been seeded
@@ -26,7 +23,6 @@ namespace SSD_Assignment_Group_4.Models
                 context.Recipe.AddRange(
                     new Recipe
                     {
-                        ID = 1,
                         Title = "Best Brownies",
                         Author = "Molei",
                         Cuisine = "American",
@@ -37,7 +33,6 @@ namespace SSD_Assignment_Group_4.Models
 
                     new Recipe
                     {
-                        ID = 2,
                         Title = "Classic Mac and Cheese",
                         Author = "Molei",
                         Cuisine = "Italian",
@@ -48,7 +43,6 @@ namespace SSD_Assignment_Group_4.Models
 
                     new Recipe
                     {
-                        ID = 3,
                         Title = "Cream of Mushroom Soup",
                         Author = "Molei",
                         Cuisine = "American",
@@ -57,13 +51,6 @@ namespace SSD_Assignment_Group_4.Models
                         Rating = 5
                     }
                 );
-                context.RecipeUser.AddRange(
-                    new RecipeUser
-                    {
-                        UserName = "admin1",
-                        Email = "admin1@gmail.com",
-
-                    });
                 context.SaveChanges();
             }
         }
