@@ -25,7 +25,7 @@ namespace SSD_Assignment_Group_4.Data
 
         public DbSet<SSD_Assignment_Group_4.Models.Recipe> Recipe { get; set; }
         public DbSet<SSD_Assignment_Group_4.Models.RecipeUser> RecipeUser { get; set; }
-
+        public DbSet<SSD_Assignment_Group_4.Models.AuditRecord> AuditRecords { get; set; }
 
     }
 }

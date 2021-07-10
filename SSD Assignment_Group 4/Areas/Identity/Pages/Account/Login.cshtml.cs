@@ -21,15 +21,24 @@ namespace SSD_Assignment_Group_4.Areas.Identity.Pages.Account
         private readonly UserManager<RecipeUser> _userManager;
         private readonly SignInManager<RecipeUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
+        private readonly SSD_Assignment_Group_4.Data.SSD_Assignment_Group_4Context _context;
 
-        public LoginModel(SignInManager<RecipeUser> signInManager, 
-            ILogger<LoginModel> logger,
-            UserManager<RecipeUser> userManager)
+        public LoginModel(SignInManager<RecipeUser> signInManager, ILogger<LoginModel> logger, UserManager<RecipeUser> userManager, SSD_Assignment_Group_4.Data.SSD_Assignment_Group_4Context context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
+            _context = context;
         }
+
+        //public LoginModel(SignInManager<RecipeUser> signInManager, 
+        //    ILogger<LoginModel> logger,
+        //    UserManager<RecipeUser> userManager)
+        //{
+        //    _userManager = userManager;
+        //    _signInManager = signInManager;
+        //    _logger = logger;
+        //}
 
         [BindProperty]
         public InputModel Input { get; set; }
@@ -85,6 +94,21 @@ namespace SSD_Assignment_Group_4.Areas.Identity.Pages.Account
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);
                 }
+                else
+                {
+                    // Login failed attempt - create an audit record
+                    var auditrecord = new AuditRecord();
+                    auditrecord.AuditActionType = "Failed Login";
+                    auditrecord.DateTimeStamp = DateTime.Now;
+                    auditrecord.KeyRecipeFieldID = 999;
+                    // 999 – dummy record 
+
+                    auditrecord.Username = Input.Username;
+                    // save the email used for the failed login
+                    _context.AuditRecords.Add(auditrecord);
+                    await _context.SaveChangesAsync();
+                }
+
                 if (result.RequiresTwoFactor)
                 {
                     return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });

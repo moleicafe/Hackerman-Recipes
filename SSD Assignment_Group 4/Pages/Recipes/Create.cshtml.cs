@@ -28,7 +28,10 @@ namespace SSD_Assignment_Group_4.Pages.Recipes
 
         public IActionResult OnGet()
         {
+            //throw new Exception("Test Error");
             return Page();
+
+
         }
 
         [BindProperty]
@@ -46,7 +49,23 @@ namespace SSD_Assignment_Group_4.Pages.Recipes
             Recipe.Author = applicationUser?.UserName;
             Recipe.ReleaseDate = DateTime.Now.ToString("M/d/yyyy");
             _context.Recipe.Add(Recipe);
-            await _context.SaveChangesAsync();
+            //await _context.SaveChangesAsync();
+            // Once a record is added, create an audit record
+            if (await _context.SaveChangesAsync() > 0)
+            {
+                // Create an auditrecord object
+                var auditrecord = new AuditRecord();
+                auditrecord.AuditActionType = "Add Movie Record";
+                auditrecord.DateTimeStamp = DateTime.Now;
+                auditrecord.KeyRecipeFieldID = Recipe.ID;
+                // Get current logged-in user
+                var userID = User.Identity.Name.ToString();
+                auditrecord.Username = userID;
+
+                _context.AuditRecords.Add(auditrecord);
+                await _context.SaveChangesAsync();
+            }
+
 
             return RedirectToPage("./Index");
         }

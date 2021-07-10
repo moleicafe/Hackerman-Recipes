@@ -7,12 +7,9 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using SSD_Assignment_Group_4.Data;
 using SSD_Assignment_Group_4.Models;
-using Microsoft.AspNetCore.Authorization;
 
-namespace SSD_Assignment_Group_4.Pages.Recipes
+namespace SSD_Assignment_Group_4.Pages.Audit
 {
-    [Authorize(Roles = "Admin")]
-
     public class DeleteModel : PageModel
     {
         private readonly SSD_Assignment_Group_4.Data.SSD_Assignment_Group_4Context _context;
@@ -23,7 +20,7 @@ namespace SSD_Assignment_Group_4.Pages.Recipes
         }
 
         [BindProperty]
-        public Recipe Recipe { get; set; }
+        public AuditRecord AuditRecord { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -32,9 +29,9 @@ namespace SSD_Assignment_Group_4.Pages.Recipes
                 return NotFound();
             }
 
-            Recipe = await _context.Recipe.FirstOrDefaultAsync(m => m.ID == id);
+            AuditRecord = await _context.AuditRecords.FirstOrDefaultAsync(m => m.Audit_ID == id);
 
-            if (Recipe == null)
+            if (AuditRecord == null)
             {
                 return NotFound();
             }
@@ -48,26 +45,12 @@ namespace SSD_Assignment_Group_4.Pages.Recipes
                 return NotFound();
             }
 
-            Recipe = await _context.Recipe.FindAsync(id);
+            AuditRecord = await _context.AuditRecords.FindAsync(id);
 
-            if (Recipe != null)
+            if (AuditRecord != null)
             {
-                _context.Recipe.Remove(Recipe);
-                //  await _context.SaveChangesAsync();
-
-                // Once a record is deleted, create an audit record
-                if (await _context.SaveChangesAsync() > 0)
-                {
-                    var auditrecord = new AuditRecord();
-                    auditrecord.AuditActionType = "Delete Movie Record";
-                    auditrecord.DateTimeStamp = DateTime.Now;
-                    auditrecord.KeyRecipeFieldID = Recipe.ID;
-                    var userID = User.Identity.Name.ToString();
-                    auditrecord.Username = userID;
-                    _context.AuditRecords.Add(auditrecord);
-                    await _context.SaveChangesAsync();
-                }
-
+                _context.AuditRecords.Remove(AuditRecord);
+                await _context.SaveChangesAsync();
             }
 
             return RedirectToPage("./Index");
