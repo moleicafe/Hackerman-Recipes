@@ -31,17 +31,8 @@ namespace SSD_Assignment_Group_4.Pages.Recipes
         public SelectList Cuisine { get; set; }
         [BindProperty(SupportsGet = true)]
         public string RecipeCuisine { get; set; }
-        //public async Task OnGetAsync()
-        //{
-        //    var recipes = from r in _context.Recipe
-        //                 select r;
-        //    if (!string.IsNullOrEmpty(SearchString))
-        //    {
-        //        recipes = recipes.Where(s => s.Title.Contains(SearchString));
-        //    }
 
-        //    Recipe = await recipes.ToListAsync();
-        //}
+
         public async Task OnGetAsync()
         {
             // Use LINQ to get list of genres.

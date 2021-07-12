@@ -53,13 +53,12 @@ namespace SSD_Assignment_Group_4.Pages.Recipes
             if (Recipe != null)
             {
                 _context.Recipe.Remove(Recipe);
-                //  await _context.SaveChangesAsync();
 
                 // Once a record is deleted, create an audit record
                 if (await _context.SaveChangesAsync() > 0)
                 {
                     var auditrecord = new AuditRecord();
-                    auditrecord.AuditActionType = "Delete Movie Record";
+                    auditrecord.AuditActionType = "Delete Recipe";
                     auditrecord.DateTimeStamp = DateTime.Now;
                     auditrecord.KeyRecipeFieldID = Recipe.ID;
                     var userID = User.Identity.Name.ToString();

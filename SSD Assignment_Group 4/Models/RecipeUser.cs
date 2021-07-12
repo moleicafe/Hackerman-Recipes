@@ -11,7 +11,7 @@ namespace SSD_Assignment_Group_4.Models
     public class RecipeUser : IdentityUser
     {
         [Display(Name = "Name")]
-        [RegularExpression(@"^[A-Z]+[a-zA-Z\s]*$")]
+        [RegularExpression("^[a-zA-Z ]*$")]
         [StringLength(30)]
         public string Name { get; set; }
         [Display(Name = "Birth Date")]

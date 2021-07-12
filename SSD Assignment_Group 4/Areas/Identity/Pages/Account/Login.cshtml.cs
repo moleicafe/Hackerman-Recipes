@@ -31,14 +31,6 @@ namespace SSD_Assignment_Group_4.Areas.Identity.Pages.Account
             _context = context;
         }
 
-        //public LoginModel(SignInManager<RecipeUser> signInManager, 
-        //    ILogger<LoginModel> logger,
-        //    UserManager<RecipeUser> userManager)
-        //{
-        //    _userManager = userManager;
-        //    _signInManager = signInManager;
-        //    _logger = logger;
-        //}
 
         [BindProperty]
         public InputModel Input { get; set; }
@@ -92,6 +84,17 @@ namespace SSD_Assignment_Group_4.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
+
+                    var auditrecord = new AuditRecord();
+                    auditrecord.AuditActionType = "Successful Login";
+                    auditrecord.DateTimeStamp = DateTime.Now;
+                    auditrecord.KeyRecipeFieldID = 999;
+                    // 999 – dummy record 
+
+                    auditrecord.Username = Input.Username;
+                    _context.AuditRecords.Add(auditrecord);
+                    await _context.SaveChangesAsync();
+
                     return LocalRedirect(returnUrl);
                 }
                 else

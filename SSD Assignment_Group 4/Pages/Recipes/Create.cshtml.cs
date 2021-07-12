@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace SSD_Assignment_Group_4.Pages.Recipes
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin, Users")]
     public class CreateModel : PageModel
     {
         private readonly SSD_Assignment_Group_4.Data.SSD_Assignment_Group_4Context _context;
@@ -49,13 +49,13 @@ namespace SSD_Assignment_Group_4.Pages.Recipes
             Recipe.Author = applicationUser?.UserName;
             Recipe.ReleaseDate = DateTime.Now.ToString("M/d/yyyy");
             _context.Recipe.Add(Recipe);
-            //await _context.SaveChangesAsync();
+
             // Once a record is added, create an audit record
             if (await _context.SaveChangesAsync() > 0)
             {
                 // Create an auditrecord object
                 var auditrecord = new AuditRecord();
-                auditrecord.AuditActionType = "Add Movie Record";
+                auditrecord.AuditActionType = "Added New Recipe";
                 auditrecord.DateTimeStamp = DateTime.Now;
                 auditrecord.KeyRecipeFieldID = Recipe.ID;
                 // Get current logged-in user
