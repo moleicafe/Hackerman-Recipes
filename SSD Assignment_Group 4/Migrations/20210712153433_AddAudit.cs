@@ -59,8 +59,7 @@ namespace SSD_Assignment_Group_4.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     AuditActionType = table.Column<string>(nullable: true),
                     Username = table.Column<string>(nullable: true),
-                    DateTimeStamp = table.Column<DateTime>(nullable: false),
-                    KeyRecipeFieldID = table.Column<int>(nullable: false)
+                    DateTimeStamp = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {

@@ -88,8 +88,6 @@ namespace SSD_Assignment_Group_4.Areas.Identity.Pages.Account
                     var auditrecord = new AuditRecord();
                     auditrecord.AuditActionType = "Successful Login";
                     auditrecord.DateTimeStamp = DateTime.Now;
-                    auditrecord.KeyRecipeFieldID = 999;
-                    // 999 – dummy record 
 
                     auditrecord.Username = Input.Username;
                     _context.AuditRecords.Add(auditrecord);
@@ -103,8 +101,6 @@ namespace SSD_Assignment_Group_4.Areas.Identity.Pages.Account
                     var auditrecord = new AuditRecord();
                     auditrecord.AuditActionType = "Failed Login";
                     auditrecord.DateTimeStamp = DateTime.Now;
-                    auditrecord.KeyRecipeFieldID = 999;
-                    // 999 – dummy record 
 
                     auditrecord.Username = Input.Username;
                     // save the email used for the failed login

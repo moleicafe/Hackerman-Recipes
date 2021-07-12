@@ -22,11 +22,7 @@ namespace SSD_Assignment_Group_4.Models
         [Display(Name = "Date/Time Stamp")]
         [DataType(DataType.DateTime)]
         public DateTime DateTimeStamp { get; set; }
-        //Time when the event occurred
-
-        [Display(Name = "Recipe Record ID ")]
-        public int KeyRecipeFieldID { get; set; }
-        //Store the ID of recipe record that is affected
+        //Time when the event occurred\
     }
 
 }

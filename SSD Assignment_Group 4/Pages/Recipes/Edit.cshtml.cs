@@ -52,27 +52,25 @@ namespace SSD_Assignment_Group_4.Pages.Recipes
 
             _context.Attach(Recipe).State = EntityState.Modified;
 
-
             try
             {
                 if (await _context.SaveChangesAsync() > 0)
                 {
                     // Create an auditrecord object
                     var auditrecord = new AuditRecord();
-                    auditrecord.KeyRecipeFieldID = Recipe.ID;
 
                     var recipeName = Recipe.Title;
-                    auditrecord.AuditActionType = "Edited Recipe";
+                    auditrecord.AuditActionType = "Edited Recipe: " + recipeName;
                     auditrecord.DateTimeStamp = DateTime.Now;
-                    
                     // Get current logged-in user
                     var userID = User.Identity.Name.ToString();
                     auditrecord.Username = userID;
 
+
                     _context.AuditRecords.Add(auditrecord);
                     await _context.SaveChangesAsync();
+                    
                 }
-                //await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {

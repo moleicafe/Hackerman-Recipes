@@ -55,9 +55,9 @@ namespace SSD_Assignment_Group_4.Pages.Recipes
             {
                 // Create an auditrecord object
                 var auditrecord = new AuditRecord();
-                auditrecord.AuditActionType = "Added New Recipe";
+                var recipeName = Recipe.Title;
+                auditrecord.AuditActionType = "Added New Recipe: " + recipeName;
                 auditrecord.DateTimeStamp = DateTime.Now;
-                auditrecord.KeyRecipeFieldID = Recipe.ID;
                 // Get current logged-in user
                 var userID = User.Identity.Name.ToString();
                 auditrecord.Username = userID;

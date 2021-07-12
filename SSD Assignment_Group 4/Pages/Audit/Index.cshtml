@@ -21,10 +21,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.AuditRecord[0].DateTimeStamp)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.AuditRecord[0].KeyRecipeFieldID)
-            </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -40,10 +36,6 @@
                 @Html.DisplayFor(modelItem => item.DateTimeStamp)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.KeyRecipeFieldID)
-            </td>
-            <td>
-                <a asp-page="./Details" asp-route-id="@item.Audit_ID">Details</a> |
                 <a asp-page="./Delete" asp-route-id="@item.Audit_ID">Delete</a>
             </td>
         </tr>

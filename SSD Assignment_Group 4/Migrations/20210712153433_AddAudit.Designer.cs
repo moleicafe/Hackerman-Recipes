@@ -10,7 +10,7 @@ using SSD_Assignment_Group_4.Data;
 namespace SSD_Assignment_Group_4.Migrations
 {
     [DbContext(typeof(SSD_Assignment_Group_4Context))]
-    [Migration("20210710182612_AddAudit")]
+    [Migration("20210712153433_AddAudit")]
     partial class AddAudit
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -173,9 +173,6 @@ namespace SSD_Assignment_Group_4.Migrations
 
                     b.Property<DateTime>("DateTimeStamp")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("KeyRecipeFieldID")
-                        .HasColumnType("int");
 
                     b.Property<string>("Username")
                         .HasColumnType("nvarchar(max)");
