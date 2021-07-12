@@ -19,7 +19,7 @@ namespace SSD_Assignment_Group_4.Models
         [Required]
         [StringLength(30)]
         public string Cuisine { get; set; }
-        [RegularExpression("^[A-Za-z0-9,_-]*$", ErrorMessage = "Please enter valid ingredients.")]
+        [RegularExpression("^[A-Za-z0-9 ,_-]*$", ErrorMessage = "Please enter valid ingredients.")]
         public string Ingredients { get; set; }
         [Display(Name = "Upload Date")]
         public string ReleaseDate { get; set; }

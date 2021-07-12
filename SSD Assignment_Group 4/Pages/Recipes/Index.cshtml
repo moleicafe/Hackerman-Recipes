@@ -12,15 +12,17 @@
 </p>
 
 <form>
-    <p>
+    <div class="form-group">
         <select asp-for="RecipeCuisine" asp-items="Model.Cuisine">
             <option value="">All</option>
         </select>
-        Title: <input type="text" asp-for="SearchString" />
-        <input type="submit" value="Filter" />
-    </p>
+        Search by Title: <input asp-for="SearchString" size="60" />
+        <input type="submit" value="Search" asp-page-handler="Test" />
+        <p>
+            <span asp-validation-for="SearchString" class="text-danger"></span>
+        </p>
+    </div>
 </form>
-
 <table class="table">
     <thead>
         <tr>
@@ -76,3 +78,6 @@
         }
     </tbody>
 </table>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

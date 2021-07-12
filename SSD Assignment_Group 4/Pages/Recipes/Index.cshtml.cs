@@ -31,10 +31,14 @@ namespace SSD_Assignment_Group_4.Pages.Recipes
         public SelectList Cuisine { get; set; }
         [BindProperty(SupportsGet = true)]
         public string RecipeCuisine { get; set; }
+        public string SQLmessage { get; set; }
 
-
-        public async Task OnGetAsync()
+        public async Task OnGetAsync(String SearchString)
         {
+            SQLmessage = "Select * From Recipe Where Title Like '%" + SearchString + "%'";
+            Recipe = await _context.Recipe.FromSqlRaw(SQLmessage).ToListAsync();
+            TempData["message"] = "Entered SQL :" + SQLmessage;
+
             // Use LINQ to get list of genres.
             IQueryable<string> cuisineQuery = from m in _context.Recipe
                                             orderby m.Cuisine
@@ -54,6 +58,10 @@ namespace SSD_Assignment_Group_4.Pages.Recipes
             }
             Cuisine = new SelectList(await cuisineQuery.Distinct().ToListAsync());
             Recipe = await recipes.ToListAsync();
+        }
+        public async Task<IActionResult>OnPostAsync(String SearchString)
+        {
+            return RedirectToPage("./Index");
         }
     }
 }
