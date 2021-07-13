@@ -24,7 +24,8 @@ namespace SSD_Assignment_Group_4.Pages.Recipes
             _context = context;
         }
 
-        public IList<Recipe> Recipe { get;set; }
+        public IList<Recipe> Recipe { get; set; }
+        public IList<RecipeUser> RecipeUser { get; set; }
         [BindProperty(SupportsGet = true)]
         [RegularExpression("^[a-zA-Z0-9]*$", ErrorMessage = "Please only enter alphanumeric characters.")]
         public string SearchString { get; set; }
@@ -35,27 +36,28 @@ namespace SSD_Assignment_Group_4.Pages.Recipes
 
         public async Task OnGetAsync(String SearchString)
         {
-            SQLmessage = "Select * From Recipe Where Title Like '%" + SearchString + "%'";
+            SQLmessage = "Select * From Recipe Where Title Like '%" + SearchString + "%'" +
+                " OR Author Like '%" + SearchString + "%'";
             Recipe = await _context.Recipe.FromSqlRaw(SQLmessage).ToListAsync();
             TempData["message"] = "Entered SQL :" + SQLmessage;
-
             // Use LINQ to get list of genres.
             IQueryable<string> cuisineQuery = from m in _context.Recipe
-                                            orderby m.Cuisine
-                                            select m.Cuisine;
+                                              orderby m.Cuisine
+                                              select m.Cuisine;
 
             var recipes = from m in _context.Recipe
-                         select m;
+                          select m;
 
             if (!string.IsNullOrEmpty(SearchString))
             {
-                recipes = recipes.Where(s => s.Title.Contains(SearchString));
+                recipes = recipes.Where(s => s.Title.Contains(SearchString) || s.Author.Contains(SearchString));
             }
 
             if (!string.IsNullOrEmpty(RecipeCuisine))
             {
                 recipes = recipes.Where(x => x.Cuisine == RecipeCuisine);
             }
+
             Cuisine = new SelectList(await cuisineQuery.Distinct().ToListAsync());
             Recipe = await recipes.ToListAsync();
         }
