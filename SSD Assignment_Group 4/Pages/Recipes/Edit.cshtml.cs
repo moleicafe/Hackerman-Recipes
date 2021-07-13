@@ -12,7 +12,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace SSD_Assignment_Group_4.Pages.Recipes
 {
-    [Authorize(Roles = "Admin, Users")]
     public class EditModel : PageModel
     {
         private readonly SSD_Assignment_Group_4.Data.SSD_Assignment_Group_4Context _context;
@@ -24,6 +23,9 @@ namespace SSD_Assignment_Group_4.Pages.Recipes
 
         [BindProperty]
         public Recipe Recipe { get; set; }
+
+        [BindProperty]
+        public RecipeUser RecipeUser { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -37,6 +39,14 @@ namespace SSD_Assignment_Group_4.Pages.Recipes
             if (Recipe == null)
             {
                 return NotFound();
+            }
+
+            RecipeUser = await _context.RecipeUser.FirstOrDefaultAsync(n => n.UserName == User.Identity.Name);
+            bool admin = User.IsInRole("Admin");
+
+            if ((Recipe.Author != RecipeUser.UserName) && (admin == false))
+            {
+                return RedirectToPage("./AccessDenied");
             }
             return Page();
         }

@@ -70,7 +70,7 @@ namespace SSD_Assignment_Group_4
                 //  options.Cookie.Domain=
                 // options.LoginPath = "/Account/Login";
                 // options.LogoutPath = "/Account/Logout";
-                // options.AccessDeniedPath = "/Account/AccessDenied";
+                //options.AccessDeniedPath = "/Account/AccessDenied";
 
                 options.Cookie.HttpOnly = true;
                 options.ExpireTimeSpan = TimeSpan.FromSeconds(30);
