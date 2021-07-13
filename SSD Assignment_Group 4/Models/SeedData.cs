@@ -69,8 +69,6 @@ namespace SSD_Assignment_Group_4.Models
                 RecipeUser user = new RecipeUser();
                 user.UserName = "user1";
                 user.Email = "user1@gmail.com";
-                user.Name = "Nancy Davolio";
-                user.BirthDate = new DateTime(1960, 2, 7);
 
                 IdentityResult result = _userManager.CreateAsync
                 (user, "Password123").Result;
@@ -88,8 +86,6 @@ namespace SSD_Assignment_Group_4.Models
                 RecipeUser user = new RecipeUser();
                 user.UserName = "admin1";
                 user.Email = "admin1@gmail.com";
-                user.Name = "Mark Smith";
-                user.BirthDate = new DateTime(1965, 12, 6);
 
                 IdentityResult result = _userManager.CreateAsync
                 (user, "P@ssword123").Result;
