@@ -16,7 +16,7 @@
         <select asp-for="RecipeCuisine" asp-items="Model.Cuisine">
             <option value="">All</option>
         </select>
-        Search by Title: <input asp-for="SearchString" size="60" />
+        Search by Title: <input asp-for="SearchString" size="60" placeholder="Filter by Title"  />
         <input type="submit" value="Search" asp-page-handler="Test" />
         <p>
             <span asp-validation-for="SearchString" class="text-danger"></span>

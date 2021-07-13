@@ -59,9 +59,5 @@ namespace SSD_Assignment_Group_4.Pages.Recipes
             Cuisine = new SelectList(await cuisineQuery.Distinct().ToListAsync());
             Recipe = await recipes.ToListAsync();
         }
-        public async Task<IActionResult>OnPostAsync(String SearchString)
-        {
-            return RedirectToPage("./Index");
-        }
     }
 }
