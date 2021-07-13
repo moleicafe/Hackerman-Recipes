@@ -46,7 +46,7 @@ namespace SSD_Assignment_Group_4.Pages.Recipes
 
             if ((Recipe.Author != RecipeUser.UserName) && (admin == false))
             {
-                return RedirectToPage("./AccessDenied");
+                return Redirect("~/Identity/Account/AccessDenied");
             }
             return Page();
         }

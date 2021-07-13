@@ -11,7 +11,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace SSD_Assignment_Group_4.Pages.Recipes
 {
-    [Authorize(Roles = "Admin")]
 
     public class DeleteModel : PageModel
     {
@@ -25,6 +24,9 @@ namespace SSD_Assignment_Group_4.Pages.Recipes
         [BindProperty]
         public Recipe Recipe { get; set; }
 
+        [BindProperty]
+        public RecipeUser RecipeUser { get; set; }
+
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
@@ -37,6 +39,14 @@ namespace SSD_Assignment_Group_4.Pages.Recipes
             if (Recipe == null)
             {
                 return NotFound();
+            }
+
+            RecipeUser = await _context.RecipeUser.FirstOrDefaultAsync(n => n.UserName == User.Identity.Name);
+            bool admin = User.IsInRole("Admin");
+
+            if ((Recipe.Author != RecipeUser.UserName) && (admin == false))
+            {
+                return Redirect("~/Identity/Account/AccessDenied");
             }
             return Page();
         }
