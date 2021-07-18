@@ -20,10 +20,16 @@ namespace SSD_Assignment_Group_4.Pages.Recipes
         }
 
         public Recipe Recipe { get; set; }
-        public RatingCommentViewModel RatingCommentViewModel { get; set; }
+
         [BindProperty]
         public RecipeComment RecipeComment { get; set; }
 
+        [BindProperty]
+        public List<RecipeComment> ListofComments { get; set; }
+
+        public int TotalRatings { get; set; }
+
+        public string Comments { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -39,10 +45,11 @@ namespace SSD_Assignment_Group_4.Pages.Recipes
                 return NotFound();
             }
 
-            RatingCommentViewModel vm = new RatingCommentViewModel();
-            vm.RecipesId = id.Value;
-            vm.Title = Recipe.Title;
-            vm.ListOfComments = _context.RecipeComments.Where(d => d.RecipesID.Equals(id.Value)).ToList();
+            var listofcomments = from m in _context.RecipeComments.Where(d => d.RecipesID.Equals(id.Value))
+                                 select m;
+            
+            ListofComments = await listofcomments.ToListAsync();
+            
 
             var ratings = _context.RecipeComments.Where(d => d.RecipesID.Equals(id.Value)).ToList();
             if (ratings.Count() > 0)
@@ -58,14 +65,24 @@ namespace SSD_Assignment_Group_4.Pages.Recipes
                 {
                     rating = ratingsum / ratingCount;
                 }
-                vm.Rating = (int)Math.Truncate(rating);
+                TotalRatings = (int)Math.Truncate(rating);
             }
             else
             {
-                vm.Rating = 0;
+                TotalRatings = 0;
             }
-            _context.RatingCommentViews.Add(vm);
 
+
+            return Page();
+        }
+
+
+        public async Task<IActionResult> OnPostAsync(int? id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
 
             //Create Recipe Comments
             RecipeComment recipeComment = new RecipeComment();
@@ -78,8 +95,9 @@ namespace SSD_Assignment_Group_4.Pages.Recipes
 
             await _context.SaveChangesAsync();
 
-            return Page();
-        }
 
+
+            return RedirectToPage("./Index");
+        }
     }
 }

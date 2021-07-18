@@ -65,21 +65,6 @@ namespace SSD_Assignment_Group_4.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "RatingCommentViews",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(nullable: true),
-                    RecipesId = table.Column<int>(nullable: false),
-                    Rating = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_RatingCommentViews", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Recipe",
                 columns: table => new
                 {
@@ -212,18 +197,11 @@ namespace SSD_Assignment_Group_4.Migrations
                     Comments = table.Column<string>(nullable: true),
                     PublishedDate = table.Column<DateTime>(nullable: false),
                     RecipesID = table.Column<int>(nullable: false),
-                    Rating = table.Column<int>(nullable: false),
-                    RatingCommentViewModelId = table.Column<int>(nullable: true)
+                    Rating = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_RecipeComments", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_RecipeComments_RatingCommentViews_RatingCommentViewModelId",
-                        column: x => x.RatingCommentViewModelId,
-                        principalTable: "RatingCommentViews",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_RecipeComments_Recipe_RecipesID",
                         column: x => x.RecipesID,
@@ -272,11 +250,6 @@ namespace SSD_Assignment_Group_4.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RecipeComments_RatingCommentViewModelId",
-                table: "RecipeComments",
-                column: "RatingCommentViewModelId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_RecipeComments_RecipesID",
                 table: "RecipeComments",
                 column: "RecipesID");
@@ -310,9 +283,6 @@ namespace SSD_Assignment_Group_4.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
-                name: "RatingCommentViews");
 
             migrationBuilder.DropTable(
                 name: "Recipe");
