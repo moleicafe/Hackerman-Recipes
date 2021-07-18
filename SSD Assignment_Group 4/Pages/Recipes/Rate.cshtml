@@ -1,0 +1,142 @@
+﻿@page
+@model SSD_Assignment_Group_4.Pages.Recipes.RateModel
+
+
+@{
+    ViewData["Title"] = Model.Recipe.Title + " Ratings";
+}
+
+
+
+<div>
+    <span class="starFadeN" id="sRate1"></span>
+    <span class="starFadeN" id="sRate2"></span>
+    <span class="starFadeN" id="sRate3"></span>
+    <span class="starFadeN" id="sRate4"></span>
+    <span class="starFadeN" id="sRate5"></span>
+</div>
+
+
+@foreach (var c in Model.RatingCommentViewModel.ListOfComments)
+{
+    <hr />
+    <div class="row">
+        <div class="col-md-3">
+            <i>(@c.PublishedDate</i>
+            <br />
+            @for (var i = 1; i <= c.Rating; i++)
+            {
+                <span>class="starGlowN""></span>
+            }
+            @for (var i = (c.Rating + 1); i <= 5; i++)
+            {
+                <span>class="starFadeN""></span>
+            }
+            <span class="starfaden"></span>
+        </div>
+        <div class="col-md-9">
+            @Html.Raw(c.Comments.Replace("\n", "<br />"))
+
+        </div>
+    </div>
+}
+
+<hr />
+
+@{
+    var totalRating = Model.RatingCommentViewModel.Rating;
+}
+
+
+<dl class="dl-horizontal">
+    <dt>
+        Comment
+    </dt>
+    <dd>
+        <form method="post" id="comment" asp-antiforgery="true">
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-md-4 control-label">
+                        Your rating<span style="font-weight:normal;"> (1 star is bad, 5 star is good) </span>
+                    </label>
+
+                    <div class="col-md-7">
+                        <div onmouseout="CRateSelected()">
+                            <span class="starFade" id="Rate1" onclick="CRate(1)" onmouseover="CRateOver(1)" onmouseout="CRateOut(1)">
+                            </span><span class="starFade" id="Rate2" onclick="CRate(2)" onmouseover="CRateOver(2)" onmouseout="CRateOut(2)">
+                            </span><span class="starFade" id="Rate3" onclick="CRate(3)" onmouseover="CRateOver(3)" onmouseout="CRateOut(3)">
+                            </span><span class="starFade" id="Rate4" onclick="CRate(4)" onmouseover="CRateOver(4)" onmouseout="CRateOut(4)">
+                            </span><span class="starFade" id="Rate5" onclick="CRate(5)" onmouseover="CRateOver(5)" onmouseout="CRateOut(5)"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <textarea asp-for="RecipeComment.Comments" required rows="5" style="width:100%;" class="form-control"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <input type="hidden" asp-for="RecipeComment.RecipesID" name="RecipeID"/>
+                        <input type="hidden" asp-for="RecipeComment.Rating" name="Rating" id="Rating" value="0" />
+                        <input type="submit" id="btnRegister" name="btnRegister" value="Submit comment" class="btn btn-warning" />
+                    </div>
+                </div>
+            </div>
+        </form>
+
+    </dd>
+
+</dl>
+<script>
+    function SubmitComment() {
+        if ($("#Rating").val() == "0") {
+            alert("Please rate this recipe.");
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
+    function CRate(r) {
+        $("#Rating").val(r);
+        for (var i = 1; i <= r; i++) {
+            $("#Rate" + i).attr('class', 'starGlow');
+        }
+        // unselect remaining
+        for (var i = r + 1; i <= 5; i++) {
+            $("#Rate" + i).attr('class', 'starFade');
+        }
+    }
+
+    function CRateOver(r) {
+        for (var i = 1; i <= r; i++) {
+            $("#Rate" + i).attr('class', 'starGlow');
+        }
+    }
+
+    function CRateOver(r) {
+        for (var i = 1; i <= r; i++) {
+            $("#Rate" + i).attr('class', 'starGlow');
+        }
+    }
+
+    function CRateSelected() {
+        var setRating = $('#Rating').val();
+        for (var i = 1; i <= setRating; i++) {
+            $("#Rate" + i).attr('class', 'starGlow');
+        }
+    }
+</script>
+
+<script>
+        function SCRate() {
+            for (var i = 1; i <= @totalRating; i++) {
+                $("#sRate" + i).attr('class', 'starGlowN');
+            }
+        }
+        $(function(){
+            SCRate();
+        });
+</script>

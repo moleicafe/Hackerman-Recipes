@@ -180,6 +180,27 @@ namespace SSD_Assignment_Group_4.Migrations
                     b.ToTable("AuditRecords");
                 });
 
+            modelBuilder.Entity("SSD_Assignment_Group_4.Models.RatingCommentViewModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Rating")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RecipesId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RatingCommentViews");
+                });
+
             modelBuilder.Entity("SSD_Assignment_Group_4.Models.Recipe", b =>
                 {
                     b.Property<int>("ID")
@@ -212,6 +233,37 @@ namespace SSD_Assignment_Group_4.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Recipe");
+                });
+
+            modelBuilder.Entity("SSD_Assignment_Group_4.Models.RecipeComment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Comments")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("PublishedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Rating")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("RatingCommentViewModelId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RecipesID")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RatingCommentViewModelId");
+
+                    b.HasIndex("RecipesID");
+
+                    b.ToTable("RecipeComments");
                 });
 
             modelBuilder.Entity("SSD_Assignment_Group_4.Models.RecipeUser", b =>
@@ -326,6 +378,19 @@ namespace SSD_Assignment_Group_4.Migrations
                     b.HasOne("SSD_Assignment_Group_4.Models.RecipeUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SSD_Assignment_Group_4.Models.RecipeComment", b =>
+                {
+                    b.HasOne("SSD_Assignment_Group_4.Models.RatingCommentViewModel", null)
+                        .WithMany("ListOfComments")
+                        .HasForeignKey("RatingCommentViewModelId");
+
+                    b.HasOne("SSD_Assignment_Group_4.Models.Recipe", "Recipes")
+                        .WithMany()
+                        .HasForeignKey("RecipesID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

@@ -26,5 +26,6 @@ namespace SSD_Assignment_Group_4.Models
             
         [Range(0,5)]
         public int Rating { get; set; }
+
     }
 }
