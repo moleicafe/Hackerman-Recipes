@@ -90,6 +90,8 @@ namespace SSD_Assignment_Group_4.Pages.Recipes
             recipeComment.RecipesID = id.Value;
             recipeComment.Recipes = Recipe;
             recipeComment.PublishedDate = DateTime.Now;
+            recipeComment.Rating = int.Parse(Request.Form["Rating"]);
+            recipeComment.Comments = Request.Form["Comment"].ToString();
 
             _context.RecipeComments.Add(recipeComment);
 
