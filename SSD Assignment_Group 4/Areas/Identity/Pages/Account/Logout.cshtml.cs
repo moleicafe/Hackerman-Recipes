@@ -16,11 +16,13 @@ namespace SSD_Assignment_Group_4.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<RecipeUser> _signInManager;
         private readonly ILogger<LogoutModel> _logger;
+        private readonly SSD_Assignment_Group_4.Data.SSD_Assignment_Group_4Context _context;
 
-        public LogoutModel(SignInManager<RecipeUser> signInManager, ILogger<LogoutModel> logger)
+        public LogoutModel(SignInManager<RecipeUser> signInManager, ILogger<LogoutModel> logger, SSD_Assignment_Group_4.Data.SSD_Assignment_Group_4Context context)
         {
             _signInManager = signInManager;
             _logger = logger;
+            _context = context;
         }
 
         public void OnGet()
@@ -33,6 +35,17 @@ namespace SSD_Assignment_Group_4.Areas.Identity.Pages.Account
             _logger.LogInformation("User logged out.");
             if (returnUrl != null)
             {
+                // Create an auditrecord object
+                var auditrecord = new AuditRecord();
+                auditrecord.AuditActionType = "Successful Logout";
+                auditrecord.DateTimeStamp = DateTime.Now;
+                // Get current logged-in user
+                var userName = User.Identity.Name.ToString();
+                auditrecord.Username = userName;
+
+                _context.AuditRecords.Add(auditrecord);
+                await _context.SaveChangesAsync();
+
                 return LocalRedirect(returnUrl);
             }
             else

@@ -22,6 +22,9 @@ namespace SSD_Assignment_Group_4.Pages.Recipes
         public Recipe Recipe { get; set; }
 
         [BindProperty]
+        public RecipeUser RecipeUser { get; set; }
+
+        [BindProperty]
         public RecipeComment RecipeComment { get; set; }
 
         [BindProperty]
@@ -78,6 +81,17 @@ namespace SSD_Assignment_Group_4.Pages.Recipes
             {
                 return Page();
             }
+            Recipe = await _context.Recipe.FirstOrDefaultAsync(m => m.ID == id);
+
+            RecipeUser = await _context.RecipeUser.FirstOrDefaultAsync(n => n.UserName == User.Identity.Name);
+            bool admin = User.IsInRole("Admin");
+            bool user = User.IsInRole("Users");
+
+            if ((Recipe.Author == RecipeUser.UserName) && ((admin == false) || (user == false)))
+            {
+                
+                return Redirect("~/Identity/Account/AccessDeniedRate");
+            }
 
             //Create Recipe Comments
             RecipeComment recipeComment = new RecipeComment();
@@ -90,7 +104,21 @@ namespace SSD_Assignment_Group_4.Pages.Recipes
 
             _context.RecipeComments.Add(recipeComment);
 
-            await _context.SaveChangesAsync();
+
+            if (await _context.SaveChangesAsync() > 0)
+            {
+                // Create an auditrecord object
+                var auditrecord = new AuditRecord();
+                var recipeName = Recipe.Title;
+                auditrecord.AuditActionType = "Rated Recipe: " + recipeName + " - " + recipeComment.Rating + " stars";
+                auditrecord.DateTimeStamp = DateTime.Now;
+                // Get current logged-in user
+                var userName = User.Identity.Name.ToString();
+                auditrecord.Username = userName;
+
+                _context.AuditRecords.Add(auditrecord);
+                await _context.SaveChangesAsync();
+            }
 
 
 

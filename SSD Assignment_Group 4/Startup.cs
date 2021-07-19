@@ -73,7 +73,7 @@ namespace SSD_Assignment_Group_4
                 //options.AccessDeniedPath = "/Account/AccessDenied";
 
                 options.Cookie.HttpOnly = true;
-                options.ExpireTimeSpan = TimeSpan.FromSeconds(30);
+                options.ExpireTimeSpan = TimeSpan.FromSeconds(80);
                 options.SlidingExpiration = true;
 
             });

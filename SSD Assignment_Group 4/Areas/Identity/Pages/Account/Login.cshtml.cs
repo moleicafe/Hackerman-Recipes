@@ -80,7 +80,7 @@ namespace SSD_Assignment_Group_4.Areas.Identity.Pages.Account
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(Input.Username, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+                var result = await _signInManager.PasswordSignInAsync(Input.Username, Input.Password, Input.RememberMe, lockoutOnFailure: true);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
@@ -103,7 +103,6 @@ namespace SSD_Assignment_Group_4.Areas.Identity.Pages.Account
                     auditrecord.DateTimeStamp = DateTime.Now;
 
                     auditrecord.Username = Input.Username;
-                    // save the email used for the failed login
                     _context.AuditRecords.Add(auditrecord);
                     await _context.SaveChangesAsync();
                 }
@@ -114,6 +113,15 @@ namespace SSD_Assignment_Group_4.Areas.Identity.Pages.Account
                 }
                 if (result.IsLockedOut)
                 {
+                    // Lockout - create an audit record
+                    var auditrecord = new AuditRecord();
+                    auditrecord.AuditActionType = "Account Locked Out";
+                    auditrecord.DateTimeStamp = DateTime.Now;
+
+                    auditrecord.Username = Input.Username;
+                    _context.AuditRecords.Add(auditrecord);
+                    await _context.SaveChangesAsync();
+
                     _logger.LogWarning("User account locked out.");
                     return RedirectToPage("./Lockout");
                 }

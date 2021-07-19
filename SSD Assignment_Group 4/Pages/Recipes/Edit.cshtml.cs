@@ -73,8 +73,8 @@ namespace SSD_Assignment_Group_4.Pages.Recipes
                     auditrecord.AuditActionType = "Edited Recipe: " + recipeName;
                     auditrecord.DateTimeStamp = DateTime.Now;
                     // Get current logged-in user
-                    var userID = User.Identity.Name.ToString();
-                    auditrecord.Username = userID;
+                    var userName = User.Identity.Name.ToString();
+                    auditrecord.Username = userName;
 
 
                     _context.AuditRecords.Add(auditrecord);

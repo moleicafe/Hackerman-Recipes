@@ -1,0 +1,10 @@
+﻿@page
+@model AccessDeniedRateModel
+@{
+    ViewData["Title"] = "Error";
+}
+
+<header>
+    <h1 class="text-danger">@ViewData["Title"]</h1>
+    <p class="text-danger">You cannot rate your own recipe.</p>
+</header>

@@ -8,6 +8,7 @@
 }
 
 <div>
+    <h2> Ratings: </h2>
     <span class="starFadeN" id="sRate1"></span>
     <span class="starFadeN" id="sRate2"></span>
     <span class="starFadeN" id="sRate3"></span>
@@ -15,34 +16,7 @@
     <span class="starFadeN" id="sRate5"></span>
 </div>
 
-
-@foreach (var c in Model.ListofComments)
-{
-    <hr />
-    <div class="row">
-        <div class="col-md-3">
-            <i>(@c.PublishedDate)</i>
-            <br />
-            @for (var i = 1; i <= c.Rating; i++)
-            {
-                <span class="starGlowN"></span>
-            }
-            @for (var i = (c.Rating + 1); i <= 5; i++)
-            {
-                <span class="starFadeN"></span>
-            }
-
-        </div>
-        <div class="col-md-9">
-            @Html.Raw(c.Comments.Replace("\n", "<br />"))
-
-        </div>
-    </div>
-}
-
-<hr />
-
-
+<hr/>
 
 <dl class="dl-horizontal">
     <dt>
@@ -53,7 +27,7 @@
             <div class="form-horizontal">
                 <div class="form-group">
                     <label class="col-md-4 control-label">
-                        Your rating<span style="font-weight:normal;"> (1 star is bad, 5 star is good) </span>
+                        Your rating<span style="font-weight:normal;"></span>
                     </label>
 
                     <div class="col-md-7">
@@ -85,6 +59,34 @@
     </dd>
 
 </dl>
+
+
+@foreach (var c in Model.ListofComments)
+{
+    <hr />
+    <div class="row">
+        <div class="col-md-3">
+            <i>(@c.PublishedDate)</i>
+            <br />
+            @for (var i = 1; i <= c.Rating; i++)
+            {
+                <span class="starGlowN"></span>
+            }
+            @for (var i = (c.Rating + 1); i <= 5; i++)
+            {
+                <span class="starFadeN"></span>
+            }
+
+        </div>
+        <div class="col-md-9">
+            @Html.Raw(c.Comments.Replace("\n", "<br />"))
+
+        </div>
+    </div>
+}
+
+
+
 <script>
     function SubmitComment() {
         if ($("#Rating").val() == 0) {
