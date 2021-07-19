@@ -50,28 +50,23 @@ namespace SSD_Assignment_Group_4.Pages.Recipes
             
             ListofComments = await listofcomments.ToListAsync();
             
-
-            var ratings = _context.RecipeComments.Where(d => d.RecipesID.Equals(id.Value)).ToList();
-            if (ratings.Count() > 0)
+            
+            var ratingCount = ListofComments.Count();
+            if (ratingCount > 0)
             {
                 var ratingsum = 0;
-                foreach(var r in ratings)
+                foreach (var r in ListofComments)
                 {
-                    ratingsum += 0;
+                    ratingsum += r.Rating;
                 }
-                var ratingCount = ratings.Count;
-                decimal rating = 0;
-                if (ratingCount > 0)
-                {
-                    rating = ratingsum / ratingCount;
-                }
+
+                decimal rating = ratingsum / ratingCount;
                 TotalRatings = (int)Math.Truncate(rating);
             }
             else
             {
                 TotalRatings = 0;
             }
-
 
             return Page();
         }

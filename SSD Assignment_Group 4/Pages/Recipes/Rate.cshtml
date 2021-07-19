@@ -1,7 +1,12 @@
 ﻿@page
 @model SSD_Assignment_Group_4.Pages.Recipes.RateModel
 
-<link rel="stylesheet" href="~/css/Rate.css"/>
+<link rel="stylesheet" href="~/css/Rate.css" />
+
+@{
+    var totalRating = Model.TotalRatings;
+}
+
 <div>
     <span class="starFadeN" id="sRate1"></span>
     <span class="starFadeN" id="sRate2"></span>
@@ -26,20 +31,17 @@
             {
                 <span class="starFadeN"></span>
             }
-            
+
         </div>
-        @*<div class="col-md-9">
+        <div class="col-md-9">
             @Html.Raw(c.Comments.Replace("\n", "<br />"))
 
-        </div>*@
+        </div>
     </div>
 }
 
 <hr />
 
-@{
-    var totalRating = Model.TotalRatings;
-}
 
 
 <dl class="dl-horizontal">
@@ -73,7 +75,7 @@
                 <div class="form-group">
                     <div class="col-md-12">
                         <input type="hidden" asp-for="RecipeComment.RecipesID" name="RecipeID" />
-                        <input type="hidden" asp-for="RecipeComment.Rating" name="Rating" id="Rating"/>
+                        <input type="hidden" asp-for="RecipeComment.Rating" name="Rating" id="Rating" />
                         <input type="submit" id="btnRegister" name="btnRegister" class="btn btn-warning" />
                     </div>
                 </div>
@@ -127,12 +129,12 @@
 </script>
 
 <script>
-        function SCRate() {
-            for (var i = 1; i <= @totalRating; i++) {
-                $("#sRate" + i).attr('class', 'starGlowN');
-            }
+    function SCRate() {
+        for (var i = 1; i <= @totalRating; i++) {
+            $("#sRate" + i).attr('class', 'starGlowN');
         }
-        $(function(){
-            SCRate();
-        });
+    }
+    window.onload = function () {
+        SCRate();
+    }
 </script>
