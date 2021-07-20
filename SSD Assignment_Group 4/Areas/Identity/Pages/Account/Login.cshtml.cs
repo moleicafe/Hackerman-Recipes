@@ -41,13 +41,13 @@ namespace SSD_Assignment_Group_4.Areas.Identity.Pages.Account
 
         [TempData]
         public string ErrorMessage { get; set; }
-        public string SQLmessage { get; set; }
+       
         public class InputModel
         {
             [Required]
             [RegularExpression("^[a-zA-Z0-9]*$", ErrorMessage = "Please only enter alphanumeric characters.")]
             public string Username { get; set; }
-
+                
             [Required]
             [DataType(DataType.Password)]
             public string Password { get; set; }
@@ -56,11 +56,9 @@ namespace SSD_Assignment_Group_4.Areas.Identity.Pages.Account
             public bool RememberMe { get; set; }
         }
 
-        public async Task OnGetAsync(String Username, string returnUrl = null)
+        public async Task OnGetAsync(string returnUrl = null)
         {
-            SQLmessage = "Select * From AspNetUsers Where UserName Like '%" + Username + "%'";
-            
-            TempData["message"] = "Entered SQL :" + SQLmessage;
+
             if (!string.IsNullOrEmpty(ErrorMessage))
             {
                 ModelState.AddModelError(string.Empty, ErrorMessage);

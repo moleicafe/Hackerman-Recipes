@@ -104,7 +104,7 @@ namespace SSD_Assignment_Group_4.Pages.Roles
                 _context.AuditRecords.Add(auditrecord);
                 await _context.SaveChangesAsync();
 
-                TempData["message"] = "Role added to this user successfully";
+                TempData["Rolemessage"] = "Role added to this user successfully";
                 return RedirectToPage("Manage");
             }
 
