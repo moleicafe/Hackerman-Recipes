@@ -52,6 +52,12 @@ namespace SSD_Assignment_Group_4.Areas.Identity.Pages.Account
             [Required]
             [EmailAddress]
             public string Email { get; set; }
+
+
+            [Required]
+            [StringLength(50, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [Display(Name = "Username")]
+            public string Username { get; set; }
         }
 
         public IActionResult OnGetAsync()
@@ -83,6 +89,7 @@ namespace SSD_Assignment_Group_4.Areas.Identity.Pages.Account
             }
 
             // Sign in the user with this external login provider if the user already has a login.
+
             var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false, bypassTwoFactor : true);
             if (result.Succeeded)
             {
@@ -122,7 +129,7 @@ namespace SSD_Assignment_Group_4.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
-                var user = new RecipeUser { UserName = Input.Email, Email = Input.Email };
+                var user = new RecipeUser { UserName = Input.Username, Email = Input.Email };
 
                 var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)
@@ -130,6 +137,7 @@ namespace SSD_Assignment_Group_4.Areas.Identity.Pages.Account
                     result = await _userManager.AddLoginAsync(user, info);
                     if (result.Succeeded)
                     {
+                        _userManager.AddToRoleAsync(user, "Users").Wait();
                         _logger.LogInformation("User created an account using {Name} provider.", info.LoginProvider);
 
                         var userId = await _userManager.GetUserIdAsync(user);
