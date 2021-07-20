@@ -23,7 +23,7 @@ namespace SSD_Assignment_Group_4.Areas.Identity.Pages.Account.Manage
             _signInManager = signInManager;
         }
 
-        public string Username { get; set; }
+       
 
         [TempData]
         public string StatusMessage { get; set; }
@@ -36,6 +36,7 @@ namespace SSD_Assignment_Group_4.Areas.Identity.Pages.Account.Manage
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+            public string Username { get; set; }
         }
 
         private async Task LoadAsync(RecipeUser user)
@@ -43,10 +44,11 @@ namespace SSD_Assignment_Group_4.Areas.Identity.Pages.Account.Manage
             var userName = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
 
-            Username = userName;
+            
 
             Input = new InputModel
             {
+                Username = userName,
                 PhoneNumber = phoneNumber
             };
         }
@@ -66,17 +68,14 @@ namespace SSD_Assignment_Group_4.Areas.Identity.Pages.Account.Manage
         public async Task<IActionResult> OnPostAsync()
         {
             var user = await _userManager.GetUserAsync(User);
-            if (user == null)
+            var setUsernameResult = await _userManager.SetUserNameAsync(user, Input.Username);
+            if (!setUsernameResult.Succeeded)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                StatusMessage = "Unexpected error when trying to set Username.";
+                return RedirectToPage();
             }
-
-            if (!ModelState.IsValid)
-            {
-                await LoadAsync(user);
-                return Page();
-            }
-
+            
+          
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
             if (Input.PhoneNumber != phoneNumber)
             {

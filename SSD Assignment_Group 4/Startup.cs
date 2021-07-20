@@ -13,6 +13,8 @@ using SSD_Assignment_Group_4.Models;
 using SSD_Assignment_Group_4.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authentication;
 
 namespace SSD_Assignment_Group_4
 {
@@ -46,7 +48,15 @@ namespace SSD_Assignment_Group_4
                  // options.Conventions.AuthorizeAreaPage("Identity", "/Manage/Accounts");
                  options.Conventions.AuthorizeFolder("/Recipes");
             });
-
+            services.Configure<MvcOptions>(options =>
+            {
+                options.Filters.Add(new RequireHttpsAttribute());
+            });
+            services.AddAuthentication().AddGoogle(googleOptions =>
+            {
+                googleOptions.ClientId = Configuration["Authentication:Google:ClientId"];
+                googleOptions.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
+            });
             services.Configure<IdentityOptions>(options =>
             {
                 // Password settings

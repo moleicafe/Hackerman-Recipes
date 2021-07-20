@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using SSD_Assignment_Group_4.Data;
 using SSD_Assignment_Group_4.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace SSD_Assignment_Group_4.Pages.Recipes
 {
@@ -25,13 +26,14 @@ namespace SSD_Assignment_Group_4.Pages.Recipes
         public RecipeUser RecipeUser { get; set; }
 
         [BindProperty]
+        
         public RecipeComment RecipeComment { get; set; }
 
         [BindProperty]
         public List<RecipeComment> ListofComments { get; set; }
 
         public int TotalRatings { get; set; }
-
+       
         public string Comments { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)

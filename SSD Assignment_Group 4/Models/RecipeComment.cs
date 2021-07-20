@@ -11,7 +11,7 @@ namespace SSD_Assignment_Group_4.Models
     {
 
         public int Id { get; set; }
-
+        [RegularExpression("^[A-Za-z0-9 ,.!?'#_-]*$", ErrorMessage = "Special characters not allowed.")]
         public string Comments { get; set; }
 
         public DateTime PublishedDate { get; set; }
