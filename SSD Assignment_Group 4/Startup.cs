@@ -56,6 +56,12 @@ namespace SSD_Assignment_Group_4
             {
                 googleOptions.ClientId = Configuration["Authentication:Google:ClientId"];
                 googleOptions.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
+            })
+            .AddFacebook(facebookOptions =>
+            {
+                facebookOptions.AppId = Configuration["Authentication:Facebook:AppId"];
+                facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
+                facebookOptions.AccessDeniedPath = "/AccessDeniedPathInfo";
             });
             services.Configure<IdentityOptions>(options =>
             {
