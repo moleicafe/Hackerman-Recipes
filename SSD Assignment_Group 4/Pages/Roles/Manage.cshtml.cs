@@ -8,10 +8,12 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using Microsoft.AspNetCore.Authorization;
 
 
 namespace SSD_Assignment_Group_4.Pages.Roles
 {
+    [Authorize(Roles = "Role Manager")]
     public class ManageModel : PageModel
     {
         private readonly SSD_Assignment_Group_4.Data.SSD_Assignment_Group_4Context _context;
@@ -89,6 +91,19 @@ namespace SSD_Assignment_Group_4.Pages.Roles
 
             if (roleResult.Succeeded)
             {
+                // Create an auditrecord object
+                var auditrecord = new AuditRecord();
+                var roleName = AppRole.Name;
+                var appUserName = AppUser.UserName;
+                auditrecord.AuditActionType = "Added \'" + roleName + "\' Role to " + appUserName;
+                auditrecord.DateTimeStamp = DateTime.Now;
+                // Get current logged-in user
+                var userName = User.Identity.Name.ToString();
+                auditrecord.Username = userName;
+
+                _context.AuditRecords.Add(auditrecord);
+                await _context.SaveChangesAsync();
+
                 TempData["message"] = "Role added to this user successfully";
                 return RedirectToPage("Manage");
             }
@@ -109,6 +124,18 @@ namespace SSD_Assignment_Group_4.Pages.Roles
             if (await _userManager.IsInRoleAsync(user, delrolename))
             {
                 await _userManager.RemoveFromRoleAsync(user, delrolename);
+
+                // Create an auditrecord object
+                var auditrecord = new AuditRecord();
+                auditrecord.AuditActionType = "Deleted \'" + delrolename + "\' Role from " + delusername;
+                auditrecord.DateTimeStamp = DateTime.Now;
+                // Get current logged-in user
+                var userName = User.Identity.Name.ToString();
+                auditrecord.Username = userName;
+
+                _context.AuditRecords.Add(auditrecord);
+                await _context.SaveChangesAsync();
+
 
                 TempData["message"] = "Role removed from this user successfully";
             }

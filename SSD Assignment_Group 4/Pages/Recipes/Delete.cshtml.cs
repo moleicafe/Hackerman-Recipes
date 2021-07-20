@@ -69,7 +69,7 @@ namespace SSD_Assignment_Group_4.Pages.Recipes
                 {
                     var auditrecord = new AuditRecord();
                     var recipeName = Recipe.Title;
-                    auditrecord.AuditActionType = "Delete Recipe: " + recipeName;
+                    auditrecord.AuditActionType = "Deleted Recipe: " + recipeName;
                     auditrecord.DateTimeStamp = DateTime.Now;
                     var userName = User.Identity.Name.ToString();
                     auditrecord.Username = userName;

@@ -95,6 +95,22 @@ namespace SSD_Assignment_Group_4.Models
                     _userManager.AddToRoleAsync(user, "Admin").Wait();
                 }
             }
+
+            if (_userManager.FindByNameAsync("admin2").Result == null)
+            {
+                RecipeUser user = new RecipeUser();
+                user.UserName = "admin2";
+                user.Email = "admin2@gmail.com";
+
+                IdentityResult result = _userManager.CreateAsync
+                (user, "P@ssword123").Result;
+
+                if (result.Succeeded)
+                {
+                    _userManager.AddToRoleAsync(user, "Admin").Wait();
+                    _userManager.AddToRoleAsync(user, "Role Manager").Wait();
+                }
+            }
         }
 
         public static void SeedRoles(RoleManager<ApplicationRole> _roleManager)
@@ -113,7 +129,18 @@ namespace SSD_Assignment_Group_4.Models
             {
                 ApplicationRole role = new ApplicationRole();
                 role.Name = "Admin";
-                role.Description = "Perform all the operations.";
+                role.Description = "Perform all the operations except roles related operations.";
+                IdentityResult roleResult = _roleManager.
+                CreateAsync(role).Result;
+            }
+
+
+
+            if (!_roleManager.RoleExistsAsync("Role Manager").Result)
+            {
+                ApplicationRole role = new ApplicationRole();
+                role.Name = "Role Manager";
+                role.Description = "Perform roles related operations.";
                 IdentityResult roleResult = _roleManager.
                 CreateAsync(role).Result;
             }
