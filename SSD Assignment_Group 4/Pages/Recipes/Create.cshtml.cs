@@ -54,10 +54,9 @@ namespace SSD_Assignment_Group_4.Pages.Recipes
             for (int i = 0; i<count; i++)
             {
                 string steps = Request.Form["Step"+(i+1)].ToString();
-                allSteps += "Step" + (i + 1) + ": " + steps + ", ";
+                allSteps += "Step" + (i + 1) + ": " + steps + "\n";
             }
             Recipe.Steps = allSteps;
-
             _context.Recipe.Add(Recipe);
 
             // Once a record is added, create an audit record

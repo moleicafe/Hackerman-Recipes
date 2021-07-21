@@ -21,8 +21,9 @@ namespace SSD_Assignment_Group_4.Models
         public string Cuisine { get; set; }
         [RegularExpression("^[A-Za-z0-9 ,_-]*$", ErrorMessage = "Please enter valid ingredients.")]
         public string Ingredients { get; set; }
-        [RegularExpression("^[A-Za-z0-9 ,()_-]*$", ErrorMessage = "Special characters not allowed.")]
+        [RegularExpression("^[A-Za-z0-9 ,:()_-]*$", ErrorMessage = "Special characters not allowed.")]
         public string Steps { get; set; }
+
         [Display(Name = "Upload Date")]
         public string ReleaseDate { get; set; }
             

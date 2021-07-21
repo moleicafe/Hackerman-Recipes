@@ -3,7 +3,11 @@
 
 @{
     ViewData["Title"] = "Edit";
+    var steps = Model.Recipe.Steps;
 }
+
+
+
 
 <h1>Edit</h1>
 
@@ -30,6 +34,13 @@
                 <span asp-validation-for="Recipe.Ingredients" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Recipe.Steps" class="control-label"></label>
+                
+                <textarea class="form-control" rows="5" type="text" asp-for="Recipe.Steps" name="Step" id="Step" placeholder="No special characters allowed..."></textarea>
+                <span asp-validation-for="Recipe.Steps" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
@@ -39,6 +50,7 @@
 <div>
     <a asp-page="./Index">Back to List</a>
 </div>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
