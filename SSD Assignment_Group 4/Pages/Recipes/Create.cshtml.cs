@@ -26,6 +26,7 @@ namespace SSD_Assignment_Group_4.Pages.Recipes
             _context = context;
         }
 
+
         public IActionResult OnGet()
         {
             //throw new Exception("Test Error");
