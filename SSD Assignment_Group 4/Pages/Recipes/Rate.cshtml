@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "{id:int?}"
 @model SSD_Assignment_Group_4.Pages.Recipes.RateModel
 
 <link rel="stylesheet" href="~/css/Rate.css" />
@@ -16,7 +16,7 @@
     <span class="starFadeN" id="sRate5"></span>
 </div>
 
-<hr/>
+<hr />
 
 <dl class="dl-horizontal">
     <dt>
@@ -24,6 +24,7 @@
     </dt>
     <dd>
         <form method="post" id="comment" onsubmit="SubmitComment();" asp-antiforgery="true">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-horizontal">
                 <div class="form-group">
                     <label class="col-md-4 control-label">
@@ -128,9 +129,7 @@
             $("#Rate" + i).attr('class', 'starGlow');
         }
     }
-</script>
 
-<script>
     function SCRate() {
         for (var i = 1; i <= @totalRating; i++) {
             $("#sRate" + i).attr('class', 'starGlowN');
@@ -140,3 +139,7 @@
         SCRate();
     }
 </script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

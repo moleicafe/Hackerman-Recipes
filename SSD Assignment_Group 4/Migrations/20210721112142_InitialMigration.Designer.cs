@@ -10,7 +10,7 @@ using SSD_Assignment_Group_4.Data;
 namespace SSD_Assignment_Group_4.Migrations
 {
     [DbContext(typeof(SSD_Assignment_Group_4Context))]
-    [Migration("20210720082356_InitialMigration")]
+    [Migration("20210721112142_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -144,6 +144,7 @@ namespace SSD_Assignment_Group_4.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
 
@@ -204,6 +205,9 @@ namespace SSD_Assignment_Group_4.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("ReleaseDate")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Steps")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")

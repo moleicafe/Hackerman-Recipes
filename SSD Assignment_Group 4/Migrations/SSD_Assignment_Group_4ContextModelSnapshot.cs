@@ -205,6 +205,9 @@ namespace SSD_Assignment_Group_4.Migrations
                     b.Property<string>("ReleaseDate")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Steps")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(60)")

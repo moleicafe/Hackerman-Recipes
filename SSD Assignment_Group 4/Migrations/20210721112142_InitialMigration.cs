@@ -12,9 +12,9 @@ namespace SSD_Assignment_Group_4.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
-                    Name = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(maxLength: 256, nullable: true),
                     ConcurrencyStamp = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(maxLength: 256, nullable: false),
                     Description = table.Column<string>(nullable: true),
                     CreatedDate = table.Column<DateTime>(nullable: false),
                     IPAddress = table.Column<string>(nullable: true)
@@ -74,6 +74,7 @@ namespace SSD_Assignment_Group_4.Migrations
                     Author = table.Column<string>(nullable: true),
                     Cuisine = table.Column<string>(maxLength: 30, nullable: false),
                     Ingredients = table.Column<string>(nullable: true),
+                    Steps = table.Column<string>(nullable: true),
                     ReleaseDate = table.Column<string>(nullable: true),
                     Rating = table.Column<int>(nullable: false)
                 },

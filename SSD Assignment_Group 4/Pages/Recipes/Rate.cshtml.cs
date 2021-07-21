@@ -33,8 +33,6 @@ namespace SSD_Assignment_Group_4.Pages.Recipes
         public List<RecipeComment> ListofComments { get; set; }
 
         public int TotalRatings { get; set; }
-       
-        public string Comments { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {

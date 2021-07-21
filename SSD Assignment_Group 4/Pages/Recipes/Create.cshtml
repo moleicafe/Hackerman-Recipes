@@ -4,6 +4,9 @@
 @{
     ViewData["Title"] = "Create";
 }
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+
 
 <h1>Create</h1>
 
@@ -28,6 +31,11 @@
                 <input asp-for="Recipe.Ingredients" class="form-control" />
                 <span asp-validation-for="Recipe.Ingredients" class="text-danger"></span>
             </div>
+
+            Add Steps: &nbsp; <span class="fa fa-plus add"></span>
+            <div class="form-group appending_div"></div>
+            <input type="hidden" asp-for="RecipeStepsCount" name="Count" id="Count"/>
+
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
@@ -38,6 +46,19 @@
 <div>
     <a asp-page="Index">Back to List</a>
 </div>
+
+<script>
+
+$(document).ready(function () {
+    var i = 1;
+    $('.add').on('click', function () {
+        var field = '<br><div>Step ' + i + ': <textarea class="form-control" type="text" name="Step' + i + '" id="Step' + i + '" ></textarea></div>';
+        $('.appending_div').append(field);
+        $("#Count").val(i);
+        i = i + 1;
+    })
+})
+</script>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
