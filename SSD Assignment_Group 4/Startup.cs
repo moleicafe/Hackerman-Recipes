@@ -15,6 +15,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using SSD_Assignment_Group_4.Services;
 
 namespace SSD_Assignment_Group_4
 {
@@ -35,10 +37,14 @@ namespace SSD_Assignment_Group_4
             services.AddDbContext<SSD_Assignment_Group_4Context>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("SSD_Assignment_Group_4Context")));
 
-            services.AddIdentity<RecipeUser, ApplicationRole>()
+            services.AddIdentity<RecipeUser, ApplicationRole>((config =>
+            {
+                config.SignIn.RequireConfirmedEmail = true;
+            }))
                 .AddDefaultUI()
                 .AddEntityFrameworkStores<SSD_Assignment_Group_4Context>()
                 .AddDefaultTokenProviders();
+
 
             services.AddMvc()
             .AddRazorPagesOptions(options =>
@@ -94,6 +100,18 @@ namespace SSD_Assignment_Group_4
 
             });
 
+            //services.AddDefaultIdentity<RecipeUser>(config =>
+            //{
+            //    config.SignIn.RequireConfirmedEmail = true;
+            //})
+                //.AddEntityFrameworkStores<SSD_Assignment_Group_4Context>();
+
+            //requires
+            // using Microsoft.AspNetCore.Identity.UI.Services;
+            //using WebPWrecover.Services;
+            services.AddTransient<IEmailSender, EmailSender>();
+            services.Configure<AuthMessageSenderOptions>(Configuration);
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
