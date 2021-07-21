@@ -3,7 +3,7 @@
 
 @{
     ViewData["Title"] = "Edit";
-    var steps = Model.Recipe.Steps;
+    var steps = Model.Recipe.Steps.Replace("\r\n", "<br />"); ;
 }
 
 
@@ -35,8 +35,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Recipe.Steps" class="control-label"></label>
-                
-                <textarea class="form-control" rows="5" type="text" asp-for="Recipe.Steps" name="Step" id="Step" placeholder="No special characters allowed..."></textarea>
+                <textarea asp-for="Recipe.Steps" class="form-control" ></textarea>
                 <span asp-validation-for="Recipe.Steps" class="text-danger"></span>
             </div>
 

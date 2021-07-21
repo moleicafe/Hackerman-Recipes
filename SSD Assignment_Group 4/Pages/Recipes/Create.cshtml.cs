@@ -49,14 +49,14 @@ namespace SSD_Assignment_Group_4.Pages.Recipes
             RecipeUser applicationUser = await _userManager.GetUserAsync(User);
             Recipe.Author = applicationUser?.UserName;
             Recipe.ReleaseDate = DateTime.Now.ToString("M/d/yyyy");
-            string allSteps = "";
-            var count = int.Parse(Request.Form["Count"]);
-            for (int i = 0; i<count; i++)
-            {
-                string steps = Request.Form["Step"+(i+1)].ToString();
-                allSteps += "Step" + (i + 1) + ": " + steps + "\n";
-            }
-            Recipe.Steps = allSteps;
+            //string allSteps = "";
+            //var count = int.Parse(Request.Form["Count"]);
+            //for (int i = 0; i<count; i++)
+            //{
+            //    string steps = Request.Form["Step"+(i+1)].ToString();
+            //    allSteps += "Step" + (i + 1) + ": " + steps + "\n";
+            //}
+            //Recipe.Steps = allSteps;
             _context.Recipe.Add(Recipe);
 
             // Once a record is added, create an audit record
