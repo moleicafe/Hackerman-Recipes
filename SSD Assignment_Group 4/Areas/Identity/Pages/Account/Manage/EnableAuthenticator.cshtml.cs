@@ -149,7 +149,7 @@ namespace SSD_Assignment_Group_4.Areas.Identity.Pages.Account.Manage
         {
             return string.Format(
                 AuthenticatorUriFormat,
-                _urlEncoder.Encode("SSD_Assignment_Group_4"),
+                _urlEncoder.Encode("Hackerman Recipes"),
                 _urlEncoder.Encode(email),
                 unformattedKey);
         }
